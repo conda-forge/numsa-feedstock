@@ -12,11 +12,12 @@ EOF
   MESON_ARGS="${MESON_ARGS:---prefix=${PREFIX} --libdir=lib} --cross-file pkgconfig.ini"
 fi
 
-if [[ "$target_platform" == "osx-64" ]]; then
+if [[ "$target_platform" == "osx-64" || "$target_platform" == "osx-arm64" ]]; then
   MESON_ARGS="${MESON_ARGS} -Dopenmp=false"
 fi
 
 meson setup _build \
+  -Ddefault_library=shared \
   ${MESON_ARGS}
 
 meson compile -C _build
